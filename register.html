@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Register - FinFlow</title>
+  <style>
+    body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;background:#f7fafc;color:#2d3748;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+    .card{background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 30px rgba(16,24,40,0.08);width:420px}
+    h1{margin-bottom:0.5rem;font-size:1.4rem}
+    p.sub{margin-bottom:1.2rem;color:#718096}
+    label{display:block;margin-top:0.8rem;font-size:0.9rem}
+    input[type="text"],input[type="email"],input[type="password"]{width:100%;padding:0.75rem;border:1px solid #e2e8f0;border-radius:8px;margin-top:0.4rem}
+    .actions{display:flex;gap:0.5rem;margin-top:1rem}
+    .btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:0.75rem 1rem;border-radius:8px;cursor:pointer;flex:1}
+    .link{display:block;text-align:center;margin-top:1rem;color:#667eea;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Create account</h1>
+    <p class="sub">Join FinFlow — secure and fast</p>
+    <form id="registerForm">
+      <label for="name">Full name</label>
+      <input id="name" name="name" type="text" required />
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required />
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required />
+      <div class="actions">
+        <button type="submit" class="btn-primary">Create account</button>
+      </div>
+    </form>
+    <a class="link" href="login.html">Already have an account? Sign in</a>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      alert('Account created (demo). Redirecting to login.');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>
