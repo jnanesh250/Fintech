@@ -531,6 +531,57 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+
+        /* Features modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 900px;
+            width: 100%;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .btn-link {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
@@ -538,12 +589,39 @@
     <nav>
         <div class="logo">FinFlow</div>
         <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
+            <li><button id="featuresButton" class="btn-link">Features</button></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="login.html"><button class="btn-primary">Sign Up</button></a></li>
         </ul>
     </nav>
+
+    <!-- Features Modal -->
+    <div id="featuresModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="featuresModalTitle">
+            <div class="modal-header">
+                <h3 id="featuresModalTitle">FinFlow Features</h3>
+                <button class="modal-close" id="featuresModalClose" aria-label="Close">✕</button>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Bank-Level Security</h3>
+                    <p>Enterprise-grade encryption and multi-layer security protocols keep your finances safe 24/7.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Process transactions in seconds with our optimized infrastructure and real-time updates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Rich Analytics</h3>
+                    <p>Comprehensive insights into your spending patterns and investment performance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -829,6 +907,40 @@
                     'translateY(-2px)' : 'translateY(-2px)';
             });
         });
+
+        // Features modal interactions
+        (function() {
+            const openBtn = document.getElementById('featuresButton');
+            const modal = document.getElementById('featuresModal');
+            const closeBtn = document.getElementById('featuresModalClose');
+
+            if (!openBtn || !modal) return;
+
+            function openModal() {
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+
+            openBtn.addEventListener('click', openModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+            // Close when clicking the overlay
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            // Close on Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+        })();
     </script>
 </body>
 </html>
