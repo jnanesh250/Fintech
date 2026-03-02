@@ -36,11 +36,41 @@
   </div>
 
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e){
+    const API_URL = 'http://localhost:5000/api'; // Fintech DB API endpoint
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e){
       e.preventDefault();
-      // demo behavior: show success and go to homepage
-      alert('Signed in (demo). Redirecting to homepage.');
-      window.location.href = 'index.html';
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch(`${API_URL}/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Store auth token if provided
+          if (data.token) {
+            localStorage.setItem('authToken', data.token);
+          }
+          alert('Signed in successfully. Redirecting to homepage.');
+          window.location.href = 'index.html';
+        } else {
+          alert('Error: ' + (data.message || 'Login failed'));
+        }
+      } catch (error) {
+        alert('Error connecting to server: ' + error.message);
+      }
     });
   </script>
 </body>
